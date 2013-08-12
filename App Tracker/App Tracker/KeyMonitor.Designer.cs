@@ -42,7 +42,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 262);
             this.Name = "KeyMonitor";
-            this.Text = "KeyMonitor";
+            this.Text = "KeyMonitor for App Tracker";
             this.ResumeLayout(false);
 
             }

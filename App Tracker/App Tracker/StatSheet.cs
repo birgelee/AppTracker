@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using AppTracker;
 using AppTracker.Watch;
 
 namespace Project1
@@ -22,7 +23,8 @@ namespace Project1
             right2.Text = (new TimeSpan(0,0,(int)(Watch.TimePlayedIn(new TimeSpan(7, 0, 0, 0), stats).TotalSeconds / 7))).ToString();
             right3.Text = Watch.TimePlayedIn(new TimeSpan(7, 0, 0, 0), stats).ToString();
             right4.Text = (new TimeSpan(0, 0, (int) (Watch.TimePlayedIn(new TimeSpan(30, 0, 0, 0, 0), stats).TotalSeconds / 30))).ToString();
-            right5.Text = totalTimePlayed.ToString();
+            right5.Text = Watch.TimePlayedSince(DateTime.Now.StartOfWeek(DayOfWeek.Monday), stats).ToString();
+            right6.Text = totalTimePlayed.ToString();
             }
 
         }

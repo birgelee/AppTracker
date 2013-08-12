@@ -50,6 +50,7 @@
       <DependentUpon>ConfermationBox.cs</DependentUpon>
     </Compile>
     <Compile Include="CurrentSession.cs" />
+    <Compile Include="DTExtension.cs" />
     <Compile Include="InfoBox.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -36,8 +36,10 @@
             this.left3 = new System.Windows.Forms.TextBox();
             this.right2 = new System.Windows.Forms.TextBox();
             this.left2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.left5 = new System.Windows.Forms.TextBox();
             this.right5 = new System.Windows.Forms.TextBox();
+            this.right6 = new System.Windows.Forms.TextBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // left1
@@ -117,15 +119,15 @@
             this.left2.TabIndex = 6;
             this.left2.Text = "Avrage time a day (last week):";
             // 
-            // textBox1
+            // left5
             // 
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox1.Location = new System.Drawing.Point(12, 89);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(172, 13);
-            this.textBox1.TabIndex = 8;
-            this.textBox1.Text = "Total time:";
+            this.left5.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.left5.Location = new System.Drawing.Point(12, 89);
+            this.left5.Name = "left5";
+            this.left5.ReadOnly = true;
+            this.left5.Size = new System.Drawing.Size(172, 13);
+            this.left5.TabIndex = 8;
+            this.left5.Text = "Time since monday:";
             // 
             // right5
             // 
@@ -136,13 +138,34 @@
             this.right5.Size = new System.Drawing.Size(176, 13);
             this.right5.TabIndex = 9;
             // 
+            // right6
+            // 
+            this.right6.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.right6.Location = new System.Drawing.Point(190, 108);
+            this.right6.Name = "right6";
+            this.right6.ReadOnly = true;
+            this.right6.Size = new System.Drawing.Size(176, 13);
+            this.right6.TabIndex = 11;
+            // 
+            // textBox1
+            // 
+            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox1.Location = new System.Drawing.Point(12, 108);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(172, 13);
+            this.textBox1.TabIndex = 12;
+            this.textBox1.Text = "Total time:";
+            // 
             // StatSheet
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(378, 262);
-            this.Controls.Add(this.right5);
             this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.right6);
+            this.Controls.Add(this.right5);
+            this.Controls.Add(this.left5);
             this.Controls.Add(this.right2);
             this.Controls.Add(this.left2);
             this.Controls.Add(this.right3);
@@ -168,7 +191,9 @@
         private System.Windows.Forms.TextBox left3;
         private System.Windows.Forms.TextBox right2;
         private System.Windows.Forms.TextBox left2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox left5;
         private System.Windows.Forms.TextBox right5;
+        private System.Windows.Forms.TextBox right6;
+        private System.Windows.Forms.TextBox textBox1;
         }
     }

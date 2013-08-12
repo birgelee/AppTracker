@@ -20,6 +20,7 @@ namespace Project1
             this.ShowInTaskbar = false;
             this.WindowState = FormWindowState.Minimized;
             this.Size = new System.Drawing.Size(0, 0);
+            this.Location = new Point(200000, 200000);
             mouseKeyEventProvider1.KeyDown += new KeyEventHandler(keyDown);
             mouseKeyEventProvider1.KeyUp += keyUp;
             mouseKeyEventProvider1.Enabled = true;
