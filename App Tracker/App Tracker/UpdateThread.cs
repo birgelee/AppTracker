@@ -5,11 +5,23 @@ using System.Text;
 using System.Threading;
 using AppTracker.Watch;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace Project1
     {
     class UpdateThread
         {
+
+            [DllImport("user32.dll")]
+
+            static extern int GetForegroundWindow();
+
+            [DllImport("user32.dll")]
+
+            static extern int GetWindowText(int hWnd, StringBuilder text, int count);
+            [DllImport("user32.dll", SetLastError = true)]
+            static extern void GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+
         public static void Update()
             {
             Thread updater = new Thread(Exec);
@@ -18,13 +30,28 @@ namespace Project1
         private static List<Watch> lastUpdated = new List<Watch>();
         private static void Exec()
             {
+
+
             List<Watch> updatedWatches = new List<Watch>();
             foreach (Watch watch in WatchManager.Watches)
                 {
-                if (Process.GetProcessesByName(watch.Name).Length > 0)
+                var processList = Process.GetProcessesByName(watch.Name);
+                if (processList.Length > 0)
                     {
-                    watch.Played();
-                    updatedWatches.Add(watch);
+                        /*int handle = 0;
+                        uint id = 0;
+                        handle = GetForegroundWindow();
+                        GetWindowThreadProcessId(new IntPtr(handle), out id);
+                        if (processList[0].Id == id)
+                        {
+                            watch.Played();
+                            updatedWatches.Add(watch);
+                        }*/
+                        watch.Played();
+                        updatedWatches.Add(watch);
+
+                    
+                    
                     }
                 watch.UpdateTab();
                 }

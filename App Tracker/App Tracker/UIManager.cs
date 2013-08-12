@@ -8,5 +8,6 @@ namespace Project1
     class UIManager
         {
         public static MainWindow window;
+        public static bool ShowWindow = true;
         }
     }

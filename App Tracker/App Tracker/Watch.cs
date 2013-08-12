@@ -5,6 +5,8 @@ using System.Text;
 using Project1;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Threading;
+using Newtonsoft.Json.Linq;
 
 namespace AppTracker.Watch
     {
@@ -13,9 +15,13 @@ namespace AppTracker.Watch
         public Watch(string name)
             {
             this.Name = name;
-            watchTab = new WatchTab("Time Played: none", RemoveWatch);
+            watchTab = new WatchTab(RemoveWatch, ShowStats);
             }
-
+        public Watch(string name, TimeSpan totalTime, List<Session> sessions) : this(name) 
+        {
+            this.mTotalTimePlayed = totalTime;
+            this.mSessions = sessions;
+        }
         public string Name;
 
         private List<Session> mSessions = new List<Session>();
@@ -55,9 +61,17 @@ namespace AppTracker.Watch
 
         public void UpdateTab()
             {
-            SetText("Time Played: " + TotalTimePlayed.Hours + ":" + TotalTimePlayed.Minutes + ":" + TotalTimePlayed.Seconds);
+            if (Sessions.Count > 0)
+                SetText("Last Session: " + Sessions.Last().Duration.Hours + ":" + Sessions.Last().Duration.Minutes + ":" + Sessions.Last().Duration.Seconds, watchTab.TabTextBox1);
+            else
+                SetText("Last Session: 0:0:0", watchTab.TabTextBox1);
+            var tpld = TimePlayedIn(new TimeSpan(1, 0, 0, 0, 0), Sessions);
+            SetText("Last Day: " + tpld.Hours + ":" + tpld.Minutes + ":" + tpld.Seconds, watchTab.TabTextBox2);
+            var tplw = TimePlayedIn(new TimeSpan(7, 0, 0, 0, 0), Sessions);
+            SetText("Last Week: " + tplw.Hours + ":" + tplw.Minutes + ":" + tplw.Seconds, watchTab.TabTextBox3);
             var img = new Bitmap(watchTab.TabPictureBox.Width, watchTab.TabPictureBox.Height);
             Graphics g = Graphics.FromImage(img);
+            
             for (int i = Sessions.Count - 1; i >= 0; i--)
                 {
                 var sessionEnd = ConvertTimeToPosition(Sessions[i].StartTime.Add(Sessions[i].Duration));
@@ -72,19 +86,20 @@ namespace AppTracker.Watch
                     {
                     g.FillRectangle(new SolidBrush(Color.Green), new Rectangle((int) (sessionStart * watchTab.TabPictureBox.Width), 0, (int) ((sessionEnd - sessionStart) * watchTab.TabPictureBox.Size.Width), watchTab.TabPictureBox.Height));
                     }
-                
+
                 }
-            
+            g.DrawRectangle(new Pen(Color.Black), new Rectangle(0, 0, watchTab.TabPictureBox.Width - 1, watchTab.TabPictureBox.Height - 1));
+
             watchTab.TabPictureBox.Image = img;
             }
-            
+
         private double ConvertTimeToPosition(DateTime time)
             {
 
-            var benchMark = DateTime.Now.Subtract(new TimeSpan(0, 0, 1, 0, 0));
+            var benchMark = DateTime.Now.Subtract(new TimeSpan(1, 0, 0, 0, 0));
             if (time.CompareTo(benchMark) > 0)
                 {
-                return time.Subtract(benchMark).TotalSeconds / (new TimeSpan(0, 0,1, 0, 0)).TotalSeconds;
+                return time.Subtract(benchMark).TotalSeconds / (new TimeSpan(1, 0, 0, 0, 0)).TotalSeconds;
                 }
             else
                 {
@@ -92,6 +107,66 @@ namespace AppTracker.Watch
                 }
 
             }
+
+
+
+        public static TimeSpan TimePlayedIn(TimeSpan period, List<Session> sessions)
+            {
+            DateTime benchmark = DateTime.Now.Subtract(period);
+            var returnVal = new TimeSpan();
+            for (int i = sessions.Count - 1; i >= 0; i--)
+                {
+                if (sessions[i].EndTime < benchmark)
+                    {
+                    return returnVal;
+                    }
+                else if (sessions[i].StartTime > benchmark)
+                    {
+                    returnVal += sessions[i].Duration;
+                    }
+                else
+                    {
+                    returnVal += sessions[i].EndTime.Subtract(benchmark);
+                    return returnVal;
+                    }
+                }
+            return returnVal;
+            }
+        public void Stopped()
+            {
+            if (currentSession != null)
+                {
+                mSessions.Add(currentSession.End());
+                currentSession = null;
+                }
+            }
+
+        public void RemoveWatch()
+            {
+            (new ConfermationBox("Are you shure you want to remove this watch?", () => {
+            WatchManager.Watches.Remove(this);
+            UIManager.window.RefreshTabs(this);
+            })).ShowDialog();
+            }
+
+
+
+        public void ShowStats()
+            {
+            Thread t = new Thread(() => { (new StatSheet(Sessions, TotalTimePlayed)).ShowDialog(); });
+            t.Start();
+            }
+
+        public JObject ToJObject()
+        {
+            var returnVal = new JObject();
+            returnVal.Add("timeplayed", new JValue(TotalTimePlayed));
+            returnVal.Add("sessions", JArray.FromObject(Sessions));
+            returnVal.Add("name", JValue.FromObject(Name));
+            return returnVal;
+        }
+
+
 
         delegate void SetImageCallback(Image image);
         private void SetPicture(Image image)
@@ -110,37 +185,21 @@ namespace AppTracker.Watch
                 pb.Image = image;
                 }
             }
-        delegate void SetTextCallback(string text);
-        private void SetText(string text)
+        delegate void SetTextCallback(string text, TextBox tb);
+        private void SetText(string text, TextBox tb)
             {
-            TextBox tb = watchTab.TabTextBox;
             // InvokeRequired required compares the thread ID of the
             // calling thread to the thread ID of the creating thread.
             // If these threads are different, it returns true.
             if (tb.InvokeRequired)
                 {
                 SetTextCallback d = new SetTextCallback(SetText);
-                tb.Invoke(d, new object[] { text });
+                tb.Invoke(d, new object[] { text, tb });
                 }
             else
                 {
                 tb.Text = text;
                 }
-            }
-        public void Stopped()
-            {
-            if (currentSession != null)
-                {
-                mSessions.Add(currentSession.End());
-                currentSession = null;
-                }
-            }
-
-        public void RemoveWatch()
-            {
-
-            WatchManager.Watches.Remove(this);
-            UIManager.window.RefreshTabs(this);
             }
 
 

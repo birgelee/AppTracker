@@ -11,6 +11,7 @@ namespace AppTracker.Watch
         private DateTime mStartTime;
         public TimeSpan Duration { get { return mDuration; } }
         public DateTime StartTime { get { return mStartTime; } }
+        public DateTime EndTime { get { return StartTime.Add(Duration); } }
 
         public Session(TimeSpan duration, DateTime startTime)
             {

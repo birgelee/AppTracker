@@ -6,9 +6,9 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{570F234D-6894-41C4-8AB4-4DA933D9225A}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Project1</RootNamespace>
+    <RootNamespace>AppTracker</RootNamespace>
     <AssemblyName>App Tracker</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
@@ -34,7 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject />
+    <StartupObject>AppTracker.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AddWatchForm.cs">
@@ -42,6 +42,12 @@
     </Compile>
     <Compile Include="AddWatchForm.Designer.cs">
       <DependentUpon>AddWatchForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ConfermationBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConfermationBox.Designer.cs">
+      <DependentUpon>ConfermationBox.cs</DependentUpon>
     </Compile>
     <Compile Include="CurrentSession.cs" />
     <Compile Include="InfoBox.cs">
@@ -51,11 +57,25 @@
       <DependentUpon>InfoBox.cs</DependentUpon>
     </Compile>
     <Compile Include="IncompleteSesstion.cs" />
+    <Compile Include="KeyMonitor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KeyMonitor.Designer.cs">
+      <DependentUpon>KeyMonitor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Loader.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Session.cs" />
+    <Compile Include="StatSheet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StatSheet.Designer.cs">
+      <DependentUpon>StatSheet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TrayIcon.cs" />
     <Compile Include="UIManager.cs" />
     <Compile Include="UpdateThread.cs" />
     <Compile Include="Utils.cs" />
@@ -64,6 +84,13 @@
     <Compile Include="WatchTab.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="MouseKeyboardActivityMonitor, Version=3.0.1.9571, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Downloads\MouseKeyboardActivityMonitor-bin\x86\MouseKeyboardActivityMonitor.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -74,9 +101,22 @@
     <EmbeddedResource Include="AddWatchForm.resx">
       <DependentUpon>AddWatchForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ConfermationBox.resx">
+      <DependentUpon>ConfermationBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="InfoBox.resx">
       <DependentUpon>InfoBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="KeyMonitor.resx">
+      <DependentUpon>KeyMonitor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StatSheet.resx">
+      <DependentUpon>StatSheet.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

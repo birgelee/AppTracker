@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using AppTracker.Watch;
+using AppTracker;
 
 namespace Project1
     {
@@ -15,6 +16,8 @@ namespace Project1
         public AddWatchForm()
             {
             InitializeComponent();
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
             }
 
         private void button1_Click(object sender, EventArgs e)
@@ -22,6 +25,7 @@ namespace Project1
             Watch w = new Watch(watchName.Text);
             WatchManager.Watches.Add(w);
             UIManager.window.RefreshTabs(w);
+            Program.Save();
             this.Close();
             this.Dispose();
             }
