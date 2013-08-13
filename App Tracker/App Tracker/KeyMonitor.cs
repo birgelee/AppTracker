@@ -25,9 +25,11 @@ namespace Project1
             mouseKeyEventProvider1.KeyUp += keyUp;
             mouseKeyEventProvider1.Enabled = true;
             }
+        Keys altcode;
         private bool ctrl, alt, T;
         public void keyDown(object sender, KeyEventArgs ke)
             {
+
             if (Program.EndProgram)
                 {
                 this.Close();
@@ -44,15 +46,15 @@ namespace Project1
                 }
             if (ke.KeyCode == Keys.Alt || ke.KeyCode == Keys.LMenu || ke.KeyCode == Keys.RMenu)
                 {
+                    altcode = ke.KeyCode;
                 alt = true;
                 }
             if (ke.KeyCode == Keys.T)
                 {
                 T = true;
                 }
-            if (ctrl && alt && T)
+            if ((ctrl && alt)  && T)
                 {
-                
                 UIManager.ShowWindow = true;
                 }
             }
@@ -72,7 +74,7 @@ namespace Project1
                 {
                 ctrl = false;
                 }
-            if (ke.KeyCode == Keys.Alt)
+            if (ke.KeyCode == Keys.Alt || ke.KeyCode == Keys.LMenu || ke.KeyCode == Keys.RMenu)
                 {
                 alt = false;
                 }
