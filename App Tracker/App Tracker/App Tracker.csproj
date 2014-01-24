@@ -79,10 +79,6 @@
     <Compile Include="WatchTab.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="MouseKeyboardActivityMonitor, Version=3.0.1.9571, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\Downloads\MouseKeyboardActivityMonitor-bin\x86\MouseKeyboardActivityMonitor.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
