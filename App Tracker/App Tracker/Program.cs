@@ -22,10 +22,8 @@ namespace AppTracker
         [STAThread]
         static void Main()
             {
-            
+                GloabalKeyListener.AttachKeyListener();
             Application.EnableVisualStyles();
-            Thread a = new Thread(() => { var km = new KeyMonitor(); km.ShowDialog(); });
-            a.Start();
             if (File.Exists(@".\save.json"))
                 {
                 if (!File.ReadAllText(@".\save.json").Equals(""))
@@ -40,22 +38,28 @@ namespace AppTracker
             Thread UI = new Thread(() => { while (!EndProgram) { if (UIManager.ShowWindow) { UIManager.ShowWindow = false; UIManager.window.ShowDialog(); UIManager.ShowWindow = false; } else { Thread.Sleep(300); } } });
             UI.Start();
 
-
-
-
-            while (true)
+            Thread terminationThread = new Thread(() =>
+            {
+                while (true)
                 {
-                if (EndProgram)
+                    if (EndProgram)
                     {
-                    UIManager.window.Close();
-                    UIManager.window.Dispose();
-                    Save();
-                    break;
+                        UIManager.window.Close();
+                        UIManager.window.Dispose();
+                        Save();
+                        GloabalKeyListener.RemoveListener();
+                        Application.Exit();
+                        break;
                     }
 
-                UpdateThread.Update();
-                Thread.Sleep(1000);
+                    UpdateThread.Update();
+                    Thread.Sleep(1000);
                 }
+            });
+            terminationThread.Start();
+            
+            Application.Run();
+            
             }
         public static bool EndProgram { get; set; }
         public static void Save()

@@ -51,6 +51,7 @@
     </Compile>
     <Compile Include="CurrentSession.cs" />
     <Compile Include="DTExtension.cs" />
+    <Compile Include="GloabalKeyListener.cs" />
     <Compile Include="InfoBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -58,12 +59,6 @@
       <DependentUpon>InfoBox.cs</DependentUpon>
     </Compile>
     <Compile Include="IncompleteSesstion.cs" />
-    <Compile Include="KeyMonitor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="KeyMonitor.Designer.cs">
-      <DependentUpon>KeyMonitor.cs</DependentUpon>
-    </Compile>
     <Compile Include="Loader.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
@@ -106,9 +101,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="InfoBox.resx">
       <DependentUpon>InfoBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="KeyMonitor.resx">
-      <DependentUpon>KeyMonitor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="StatSheet.resx">
       <DependentUpon>StatSheet.cs</DependentUpon>
