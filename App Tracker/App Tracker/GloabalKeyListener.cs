@@ -57,7 +57,7 @@ class GloabalKeyListener
             {
                 T = true;
             }
-            if ((ctrl && alt) && T)
+            if (((ctrl && alt) && T) && UIManager.EnableCtrlAltT)
             {
                 UIManager.ShowWindow = true;
             }

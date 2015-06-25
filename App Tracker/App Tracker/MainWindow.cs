@@ -42,6 +42,7 @@ namespace Project1
             this.addWatchButton = new Button();
             this.closeButton = new Button();
             this.showIconCheckBox = new CheckBox();
+            this.ctrlAltTCheckBox = new CheckBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
 
@@ -70,7 +71,25 @@ namespace Project1
             showIconCheckBox.Text = "Show Icon";
             showIconCheckBox.UseVisualStyleBackColor = true;
             showIconCheckBox.Checked = true;
-            showIconCheckBox.CheckedChanged += (sender, args) => { if (showIconCheckBox.Checked) { UIManager.TrayIcon.Visible = true; } else { UIManager.TrayIcon.Visible = false; } };
+            showIconCheckBox.CheckedChanged += (sender, args) =>
+            {
+                if (showIconCheckBox.Checked) { UIManager.TrayIcon.Visible = true; }
+                else { UIManager.TrayIcon.Visible = false; if (!ctrlAltTCheckBox.Checked) { ctrlAltTCheckBox.Checked = true; } }
+            };
+
+            ctrlAltTCheckBox.Location = new System.Drawing.Point(300, 3);
+            ctrlAltTCheckBox.Name = "ShowIconCheckBox";
+            ctrlAltTCheckBox.Size = new System.Drawing.Size(200, 23);
+            ctrlAltTCheckBox.TabIndex = 0;
+            ctrlAltTCheckBox.Text = "Enable Ctrl+Alt+T";
+            ctrlAltTCheckBox.UseVisualStyleBackColor = true;
+            ctrlAltTCheckBox.Checked = true;
+            ctrlAltTCheckBox.CheckedChanged += (sender, args) =>
+            {
+                if (ctrlAltTCheckBox.Checked) { UIManager.EnableCtrlAltT = true; }
+                else { UIManager.EnableCtrlAltT = false; if (!showIconCheckBox.Checked) { showIconCheckBox.Checked = true; } }
+            };
+
 
             // 
             // panel1
@@ -95,6 +114,7 @@ namespace Project1
             this.Controls.Add(addWatchButton);
             this.Controls.Add(closeButton);
             this.Controls.Add(showIconCheckBox);
+            this.Controls.Add(ctrlAltTCheckBox);
             this.Name = "MainWindow";
             this.Text = "App Tracker";
             this.panel1.ResumeLayout(false);
@@ -108,6 +128,7 @@ namespace Project1
         private Button addWatchButton;
         private Button closeButton;
         private CheckBox showIconCheckBox;
+        private CheckBox ctrlAltTCheckBox;
 
         public void RefreshTabs(Watch removedWatch)
         {

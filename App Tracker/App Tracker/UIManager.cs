@@ -16,6 +16,6 @@ namespace Project1
         public static MainWindow window;
         public static bool ShowWindow = true;
 
-        
+        public static bool EnableCtrlAltT = true;
         }
     }
