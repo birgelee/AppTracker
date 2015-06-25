@@ -22,7 +22,7 @@ namespace Project1
 
         private void button1_Click(object sender, EventArgs e)
             {
-            Watch w = new Watch(watchName.Text);
+            Watch w = new Watch(watchName.Text, aliasName.Text);
             WatchManager.Watches.Add(w);
             UIManager.window.RefreshTabs(w);
             Program.Save();

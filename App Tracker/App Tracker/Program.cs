@@ -15,25 +15,25 @@ using System.Security.Cryptography;
 using System.Runtime.InteropServices;
 
 namespace AppTracker
-    {
+{
     class Program
-        {
+    {
 
         [STAThread]
         static void Main()
-            {
-                GloabalKeyListener.AttachKeyListener();
+        {
+            GloabalKeyListener.AttachKeyListener();
             Application.EnableVisualStyles();
             if (File.Exists(@".\save.json"))
-                {
+            {
                 if (!File.ReadAllText(@".\save.json").Equals(""))
-                WatchManager.Watches = Loader.Load(@".\save.json");
-                }
+                    WatchManager.Watches = Loader.Load(@".\save.json");
+            }
             else
-                {
+            {
                 (File.Create(@".\save.json")).Close();
-                
-                }
+
+            }
             UIManager.window = new MainWindow();
             Thread UI = new Thread(() => { while (!EndProgram) { if (UIManager.ShowWindow) { UIManager.ShowWindow = false; UIManager.window.ShowDialog(); UIManager.ShowWindow = false; } else { Thread.Sleep(300); } } });
             UI.Start();
@@ -57,16 +57,16 @@ namespace AppTracker
                 }
             });
             terminationThread.Start();
-            
+
             Application.Run();
-            
-            }
+
+        }
         public static bool EndProgram { get; set; }
         public static void Save()
-            {
+        {
             Loader.Save(@".\save.json", WatchManager.Watches);
-            }
         }
-
-
     }
+
+
+}

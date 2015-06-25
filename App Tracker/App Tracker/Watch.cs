@@ -12,18 +12,19 @@ namespace AppTracker.Watch
 {
     public class Watch
     {
-        public Watch(string name)
+        public Watch(string name, string alias)
         {
             this.Name = name;
+            this.Alias = alias;
             watchTab = new WatchTab(RemoveWatch, ShowStats);
         }
-        public Watch(string name, TimeSpan totalTime, List<Session> sessions)
-            : this(name)
+        public Watch(string name, string alias, TimeSpan totalTime, List<Session> sessions)
+            : this(name, alias)
         {
             this.mTotalTimePlayed = totalTime;
             this.mSessions = sessions;
         }
-        public string Name;
+        public string Name, Alias;
 
         private List<Session> mSessions = new List<Session>();
 
@@ -171,6 +172,7 @@ namespace AppTracker.Watch
             returnVal.Add("timeplayed", new JValue(TotalTimePlayed));
             returnVal.Add("sessions", JArray.FromObject(Sessions));
             returnVal.Add("name", JValue.FromObject(Name));
+            returnVal.Add("alias", JValue.FromObject(Alias));
             return returnVal;
         }
 
@@ -201,8 +203,12 @@ namespace AppTracker.Watch
             // If these threads are different, it returns true.
             if (tb.InvokeRequired)
             {
-                SetTextCallback d = new SetTextCallback(SetText);
-                tb.Invoke(d, new object[] { text, tb });
+                try
+                {
+                    SetTextCallback d = new SetTextCallback(SetText);
+                    tb.Invoke(d, new object[] { text, tb });
+                }
+                catch (ObjectDisposedException ode) {}
             }
             else
             {

@@ -129,7 +129,7 @@ namespace Project1
             groupBox1.Size = new System.Drawing.Size(590, 74);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
-            groupBox1.Text = watch.Name;
+            groupBox1.Text = watch.Alias;
 
             this.panel1.Controls.Add(groupBox1);
             tabs.Add(watch, groupBox1);

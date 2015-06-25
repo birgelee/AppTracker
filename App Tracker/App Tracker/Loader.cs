@@ -19,9 +19,10 @@ namespace Project1
             foreach (JObject obj in array)
             {
                 string name = obj["name"].ToObject<string>();
+                string alias = obj["alias"].ToObject<string>();
                 TimeSpan totaltimeplayed = obj["timeplayed"].ToObject<TimeSpan>();
                 List<Session> sessions = obj["sessions"].ToObject<List<Session>>();
-                returnVal.Add(new Watch(name, totaltimeplayed, sessions));
+                returnVal.Add(new Watch(name, alias, totaltimeplayed, sessions));
             }
             return returnVal;
         }
