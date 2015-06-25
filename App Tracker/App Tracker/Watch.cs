@@ -208,7 +208,7 @@ namespace AppTracker.Watch
                     SetTextCallback d = new SetTextCallback(SetText);
                     tb.Invoke(d, new object[] { text, tb });
                 }
-                catch (ObjectDisposedException ode) {}
+                catch (Exception ode) {}
             }
             else
             {
